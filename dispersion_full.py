@@ -263,7 +263,7 @@ def main():
 
             y_ticks = []
             y_tick_labels = []
-            for i in range(x+1):
+            for i in range(int(x+1)):
                 y_ticks.append(i*10)
                 y_tick_labels.append(i)
 
