@@ -12,6 +12,8 @@ import seaborn as sb
 ############################## CONSTANT TABLES #################################
 
 # Atmospheric conditions table
+
+
 def atmos():
     atmos = [
         ", Wind [m/s]",
@@ -128,7 +130,7 @@ def get_sigma_z(stability, x):
 # y = 0           # Lateral coordinate                                     [m]
 # z = 0           # Vertical coordinate                                    [m]
 # H = 0           # Plume height (sum of actual height and plume rise)     [m]
-def turner(x, y, z, H, Q, mu, sigma_y, sigma_z):
+def turner(y, z, H, Q, mu, sigma_y, sigma_z):
     return np.round(
         (
             (Q / (2 * np.pi * sigma_y * sigma_z * mu))
@@ -244,7 +246,6 @@ def main():
     if SINGLE:
         print(
             turner(
-                X_DIS,
                 Y_DIS,
                 Z_DIS,
                 EFFECTIVE_HEIGHT,
@@ -267,7 +268,6 @@ def main():
                 for lateral in range(-Y_DIS, Y_DIS + 1, L_RES):
                     RESULTS[int(height / H_RES)][int(downwind / D_RES)].append(
                         turner(
-                            (downwind / 1000),
                             lateral,
                             height,
                             EFFECTIVE_HEIGHT,
@@ -297,12 +297,20 @@ def main():
             out.to_csv(f"./{X_DIS}x{Y_DIS}x{Z_DIS}-stack_dispersion.csv")
 
         if validate("Show heatmap [0/1]: ", True, True):
-            plot = int(int(validate("Height [10m multiple]: ")) / H_RES)
+
+            # Generate height options
+            planes = []
+            for h in range(0, Z_DIS + 1, 10):
+                planes.append(f"{h}")
+
+            plot = int(
+                int(validate(f"Height {planes}: ", True, False, planes)) / H_RES)
 
             x_ticks = []
             x_tick_labels = []
             for i in range(0, len(RESULTS[0][0]) + 2, 4):
-                x_ticks.append((len(RESULTS[0][0])) / (len(RESULTS[0][0]) + 1) * i)
+                x_ticks.append(
+                    (len(RESULTS[0][0])) / (len(RESULTS[0][0]) + 1) * i)
                 x_tick_labels.append(
                     int(-Y_DIS + (Y_DIS * 2 / (len(RESULTS[0][0]) + 1) * i))
                 )
@@ -314,7 +322,8 @@ def main():
                 y_tick_labels.append(i)
 
             fig, ax1 = plt.subplots(1, 1, figsize=(10, 10))
-            sb.heatmap(RESULTS[plot], ax=ax1, square=True, robust=True, cmap="coolwarm")
+            sb.heatmap(RESULTS[plot], ax=ax1, square=True,
+                       robust=True, cmap="coolwarm")
             ax1.set_yticks(y_ticks)
             ax1.set_yticklabels(y_tick_labels)
             ax1.set_ylabel("Downwind Distance [km]")
