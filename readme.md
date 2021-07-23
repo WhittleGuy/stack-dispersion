@@ -1,18 +1,15 @@
+#### Table of Contents
+- [Tall Stack Dispersion Modelling with Python](#tall-stack-dispersion-modelling-with-python)
+  - [Clone the repository from the terminal](#clone-the-repository-from-the-terminal)
+  - [Python 3](#python-3)
+  - [Required Libraries](#required-libraries)
+  - [Running the Program](#running-the-program)
+  - [Important Notes](#important-notes)
+- [Tall Stack Dispersion Interactive Model](#tall-stack-dispersion-interactive-model)
+  - [Jupyter Notebook](#jupyter-notebook)
+  - [Example Plot](#example-plot)
+
 # Tall Stack Dispersion Modelling with Python
-
-If you have any problems or find errors with the guide or with the program, please let me know.
-
-## Jupyter Notebook
-
-The Jupyter Notebook file is an interactive model with sliders for the variables, and a quickly updating plot.
-
-Include the following to enable `ipywidgets` in your notebook:
-
-```bash
-pip install ipywidgets
-jupyter nbextension enable --py widgetnbextension
-```
-
 ## Clone the repository from the terminal
 
 ```bash
@@ -107,6 +104,8 @@ Stack emission rate [g/s]: 1656.2
 Stack velocity [m/s]: 10.0
 ```
 
+(This should give you an answer of ~0.001455.)
+
 You will then be prompted with several options:
 
 - Print results.
@@ -117,13 +116,27 @@ You will then be prompted with several options:
 - Show heatmap
   - Display a heatmap of concentrations at a particular height above the ground
 
-If you decide to view the heatmap, you will be prompted for the height. Concentrations are stored in several planes corresponding to different heights. You **must** enter a multiple of 10, as this is resolution at which the planes are created. These plots can give you a general idea of the dispersion's "shape" on that elevation plane.
+If you decide to view the heatmap, you will be prompted for the height. Concentrations are stored in several planes corresponding to different heights. The prompt will list your options. These plots can give you a general idea of the dispersion's "shape" on that elevation plane.
 
 ## Important Notes
 
 - When calculating a single point, the value returned will be the concentration at the data you entered
 - When calculating concentrations in a volume, the data will be _bounded_ by the downwind, lateral, and vertical values you enter. The values are inclusive.
 - Generating a dataset is not always immediate. Large tables may take several seconds, maybe minutes, to generate, depending on the volume of the bounded area, and your pc specifications.
+
+# Tall Stack Dispersion Interactive Model
+## Jupyter Notebook
+
+Jupyter Notebook is available [here](https://jupyter.org/). It is widely used for practicing and using python, and is great for everything from simple addition to designing machine learning algorithms.
+
+The Jupyter Notebook file is an interactive model with sliders for the variables, and a quickly updating plot. It utilizes `ipywidgets`, in addition to the libraries in the main python program.
+
+Include the following to enable `ipywidgets`:
+
+```bash
+pip install ipywidgets
+jupyter nbextension enable --py widgetnbextension
+```
 
 ## Example Plot
 
