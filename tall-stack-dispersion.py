@@ -244,17 +244,17 @@ def main():
 
     # Single point calculation
     if SINGLE:
-        print(
-            turner(
-                Y_DIS,
-                Z_DIS,
-                EFFECTIVE_HEIGHT,
-                EMISSION_RATE,
-                WIND_SPEED,
-                get_sigma_y(CATEGORY, X_DIS),
-                get_sigma_z(CATEGORY, X_DIS),
-            )
+        result = turner(
+            Y_DIS,
+            Z_DIS,
+            EFFECTIVE_HEIGHT,
+            EMISSION_RATE,
+            WIND_SPEED,
+            get_sigma_y(CATEGORY, X_DIS),
+            get_sigma_z(CATEGORY, X_DIS),
         )
+        print("------------------------------------------")
+        print(f"Concentration: {result} [g/m^3]")
 
     # Bounded volume calculation
     else:
@@ -303,14 +303,12 @@ def main():
             for h in range(0, Z_DIS + 1, 10):
                 planes.append(f"{h}")
 
-            plot = int(
-                int(validate(f"Height {planes}: ", True, False, planes)) / H_RES)
+            plot = int(int(validate(f"Height {planes}: ", True, False, planes)) / H_RES)
 
             x_ticks = []
             x_tick_labels = []
             for i in range(0, len(RESULTS[0][0]) + 2, 4):
-                x_ticks.append(
-                    (len(RESULTS[0][0])) / (len(RESULTS[0][0]) + 1) * i)
+                x_ticks.append((len(RESULTS[0][0])) / (len(RESULTS[0][0]) + 1) * i)
                 x_tick_labels.append(
                     int(-Y_DIS + (Y_DIS * 2 / (len(RESULTS[0][0]) + 1) * i))
                 )
@@ -322,8 +320,7 @@ def main():
                 y_tick_labels.append(i)
 
             fig, ax1 = plt.subplots(1, 1, figsize=(10, 10))
-            sb.heatmap(RESULTS[plot], ax=ax1, square=True,
-                       robust=True, cmap="coolwarm")
+            sb.heatmap(RESULTS[plot], ax=ax1, square=True, robust=True, cmap="coolwarm")
             ax1.set_yticks(y_ticks)
             ax1.set_yticklabels(y_tick_labels)
             ax1.set_ylabel("Downwind Distance [km]")
