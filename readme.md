@@ -2,6 +2,17 @@
 
 If you have any problems or find errors with the guide or with the program, please let me know.
 
+## Jupyter Notebook
+
+The Jupyter Notebook file is an interactive model with sliders for the variables, and a quickly updating plot.
+
+Include the following to enable `ipywidgets` in your notebook:
+
+```bash
+pip install ipywidgets
+jupyter nbextension enable --py widgetnbextension
+```
+
 ## Clone the repository from the terminal
 
 ```bash
